@@ -1,93 +1,88 @@
-import { IBook } from '@/types/booksType';
-import Image from 'next/image';
+import { IBook } from "@/types/booksType";
+import Image from "next/image";
+import Link from "next/link";
 
-
-
-interface IBookCardProps{
-  book:IBook;
+interface IBookCardProps {
+  book: IBook;
 }
-const BookCard = ({book}:IBookCardProps) => {
+const BookCard = ({ book }: IBookCardProps) => {
   return (
-            <div
-              key={book.bookId}
-              className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+    <div
+      key={book.bookId}
+      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+    >
+      {/* Image */}
+      <div className="relative h-72 overflow-hidden bg-slate-100">
+        <Image
+          src={book.image}
+          alt={book.bookName}
+          width={600}
+          height={800}
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        />
+
+        {/* Category */}
+        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-indigo-600 shadow-sm backdrop-blur">
+          {book.category}
+        </span>
+
+        {/* Rating */}
+        <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold shadow-sm backdrop-blur">
+          <span className="text-yellow-500">★</span>
+          <span className="text-slate-700">{book.rating}</span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-5">
+        {/* Title */}
+        <h2 className="line-clamp-1 text-xl font-bold text-slate-900">
+          {book.bookName}
+        </h2>
+
+        {/* Author */}
+        <p className="mt-1 text-sm text-slate-500">
+          by <span className="font-medium text-slate-700">{book.author}</span>
+        </p>
+
+        {/* Book Information */}
+        <div className="mt-4 grid grid-cols-2 gap-3 border-y border-slate-100 py-4">
+          <div>
+            <p className="text-xs text-slate-400">Pages</p>
+            <p className="mt-1 font-semibold text-slate-700">
+              {book.totalPages}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs text-slate-400">Published</p>
+            <p className="mt-1 font-semibold text-slate-700">
+              {book.yearOfPublishing}
+            </p>
+          </div>
+        </div>
+
+        {/* Tags */}
+        <div className="mt-4 flex flex-wrap gap-2">
+          {book.tags.map((tag: string) => (
+            <span
+              key={tag}
+              className="rounded-md bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-600"
             >
-              {/* Image */}
-              <div className="relative h-72 overflow-hidden bg-slate-100">
-                <Image
-                  src={book.image}
-                  alt={book.bookName}
-                  width={600}
-                  height={800}
+              #{tag}
+            </span>
+          ))}
+        </div>
 
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                />
-
-                {/* Category */}
-                <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-indigo-600 shadow-sm backdrop-blur">
-                  {book.category}
-                </span>
-
-                {/* Rating */}
-                <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold shadow-sm backdrop-blur">
-                  <span className="text-yellow-500">★</span>
-                  <span className="text-slate-700">{book.rating}</span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-5">
-
-                {/* Title */}
-                <h2 className="line-clamp-1 text-xl font-bold text-slate-900">
-                  {book.bookName}
-                </h2>
-
-                {/* Author */}
-                <p className="mt-1 text-sm text-slate-500">
-                  by{" "}
-                  <span className="font-medium text-slate-700">
-                    {book.author}
-                  </span>
-                </p>
-
-
-
-                {/* Book Information */}
-                <div className="mt-4 grid grid-cols-2 gap-3 border-y border-slate-100 py-4">
-                  <div>
-                    <p className="text-xs text-slate-400">Pages</p>
-                    <p className="mt-1 font-semibold text-slate-700">
-                      {book.totalPages}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-xs text-slate-400">Published</p>
-                    <p className="mt-1 font-semibold text-slate-700">
-                      {book.yearOfPublishing}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Tags */}
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {book.tags.map((tag:string) => (
-                    <span
-                      key={tag}
-                      className="rounded-md bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-600"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Button */}
-                <button className="mt-5 w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 active:scale-[0.98]">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+        {/* Button */}
+        <Link href={`/books/${book.bookId}`}>
+          {" "}
+          <button className="mt-5 w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 active:scale-[0.98]">
+            Add to Cart
+          </button>
+        </Link>
+      </div>
+    </div>
   );
 };
 
