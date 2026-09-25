@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
-
+import BooksProvider from "@/context/BooksContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -22,17 +22,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      data-theme='light'//browser insatall deasy UI browser color truns got black use this browser white
+      data-theme="light" //browser insatall deasy UI browser color truns got black use this browser white
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        
-        <Navbar></Navbar>
-        {children}
-        
-         <h2 className="font-bold text-5xl bg-amber-300 text-center">Footer</h2>
-        </body>
-        
+        <BooksProvider>
+          {" "}
+          <Navbar></Navbar>
+          {children}
+          <h2 className="font-bold text-5xl bg-amber-300 text-center">
+            Footer
+          </h2>
+        </BooksProvider>
+      </body>
     </html>
   );
 }
